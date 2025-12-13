@@ -218,6 +218,10 @@ arecord -l
 
 ### 硬體串接
 
+於影片中介紹
+
+[YouTube 介紹影片連結](https://youtu.be/vOPqylx6xjQ)
+
 ### 程式執行方式
 
 如果軟體環境與硬體都與上面一樣，只要執行 `main.py` 就會在 `:5000` 執行 Flask 網頁程式：
