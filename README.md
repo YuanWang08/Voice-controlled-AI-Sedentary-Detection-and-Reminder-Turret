@@ -25,7 +25,9 @@
     - 硬體設備檢查
   - 硬體串接
   - 程式執行方式
-- 軟體架構說明
+- 程式架構說明
+- AI 模型說明
+- 網頁說明
 
 ## About Author
 
@@ -79,12 +81,20 @@
 - 麵包板 (方便接線)
 - 喇叭 (就沒有聲音而已)
 
+## 執行圖片
+
+![執行圖片1](/img/圖片1.png)
+![執行圖片1](/img/圖片2.png)
+![執行圖片1](/img/圖片3.png)
+![執行圖片1](/img/圖片4.png)
+
 ## 專案初始化 & 實作歷程記錄
 
 ### Raspberry Pi 4 System Configurations
 
 - Storage: SD Card 32 GB
 - OS: Raspberry Pi OS (Legacy, 64-bit) (A port of Debian Bullseye)
+  - 使用 64-bit 版本的 OS 可以增加效能，並且可以使用 VSCode 的 SSH Extension 進行操作，可以完全不用接螢幕就可以初始化設置樹莓派
 - 映像連結：https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2023-05-03/2023-05-03-raspios-bullseye-arm64.img.xz
 - Python: 3.9 (should be built-in with OS)
 
@@ -204,7 +214,7 @@ unzip vosk-model-small-cn-0.22.zip
 # Google Inc. (Coral 運作時的名稱)
 lsusb
 
-# 檢查馬達板 (I2C) 看到 40 和 70
+# 檢查馬達板 (I2C) 看到 40
 sudo i2cdetect -y 1
 
 # 檢查相機
@@ -297,6 +307,33 @@ python3 main.py
   - 存放多媒體資源。
   - 包含開火音效檔 (`shotsound.wav`)。
 
-## 心得
+**AI 模型說明：**
 
-好累
+- **MoveNet：**用來主要標記影像中的物體，在網頁中用綠色的框標示
+- **PoseNet：**：特別拿來標記人體，可以在環境變數中決定要不要開啟(ENABLE_MOVENET)與掃描率，在網頁中會使用黃色的節點標示(MOVENET_SKIP_FRAMES，數字越小吃越多效能，建議不能超過 10)，開啟後效能會吃很多網頁可能會跑不動。開啟後可以辨識雙手舉高的人，如果發現有雙手舉高的人會出現提示文字並且就不會再開火(開火會被禁用)。
+- **Vosk-small-cn：**輕量的中文語音轉文字模型(效果很差，但堪用，Gemini 有機率可以讀得懂)
+
+**網頁說明：**
+
+- 可以使用 WASD 或是拉桿來手動操作機器
+- 可以手動按下發射按鈕
+- "Auto Track"模式會追縱畫面中最大的人
+- 哨兵模式會偵測空間中靜止不動的人，頭上會顯示一個計時器(紅色的數字)，達到特定時間後會發射，(時間可以在環境變數中的 SENTRY_TIMEOUT 設置)
+- 使用語音輸入非預設的指令會執行 Gemini，然後鎖定 Gemini 回傳之座標的物件
+- 右下方可以看到系統執行紀錄與語音辨識的紀錄
+
+**環境變數說明：**
+
+- GEMINI_API_KEY="test_api_key"，語音操作必備
+- GEMINI_MODEL_NAME="gemini-2.5-flash"，建議用最簡單回復最快速的模型就可以了
+- ENABLE_MOVENET=true，決定使否啟用 Movenet 模型
+- MOVENET_SKIP_FRAMES=5，決定 Movenet 的採樣頻率(數字越小，採樣越快，越吃效能)
+- SURRENDER_TEXT="Absolute Cinema!"，設置雙手舉高時顯示的文字
+- SENTRY_TIMEOUT=5，設置久坐偵測的判定時間
+- SENTRY_MOVE_THRESHOLD=5.0，久坐判定的品感度，數字越大容忍程度越大
+- FIRE_SOUND_PATH="/home/user/Desktop/media/shotsound.wav"，不重要
+
+## 可以再改進的部分
+
+- 模型在追蹤物體時有機率追一追跑掉，或是突然看天花板然後就再也下不來了
+- 應該再多做一個開啟麥克風收音的按鈕(現在是無論何時都再收音，只要有人講話程式就會被插斷)
