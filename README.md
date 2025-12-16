@@ -333,7 +333,7 @@ python3 main.py
 - SURRENDER_TEXT="Absolute Cinema!"，設置雙手舉高時顯示的文字
 - SENTRY_TIMEOUT=5，設置久坐偵測的判定時間
 - SENTRY_MOVE_THRESHOLD=5.0，久坐判定的品感度，數字越大容忍程度越大
-- FIRE_SOUND_PATH="/home/user/Desktop/media/shotsound.wav"，不重要
+- FIRE_SOUND_PATH="/home/user/Desktop/media/shotsound.wav"，音效檔案路徑
 
 ## 可以再改進的部分
 
