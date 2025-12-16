@@ -39,8 +39,6 @@
 
 ## 專題簡介與理想
 
-[![Demo圖](/img/demo.jpg)](https://www.youtube.com/watch?v=vOPqylx6xjQ)
-
 這是一個基於 Raspberry Pi 4 的 AI 智慧哨兵系統，結合了邊緣運算 (Coral TPU) 與雲端 AI (Google Gemini)，具備物體追蹤、姿態辨識、語音控制與遠端網頁監控功能。會透過鏡頭掃視房間，辨識出人體後會框起來，然後在框的旁邊有個計時器，計時該人多久沒有移動(離開座位)，當時間超過 2 分鐘，會先叫一聲表示提醒，超過三分鐘時就會瞄準那個人發射橡皮筋子彈。
 
 ### 主要功能簡介
@@ -233,6 +231,8 @@ arecord -l
 於影片中介紹(3:30)
 
 [YouTube 介紹影片連結](https://youtu.be/vOPqylx6xjQ)
+
+[![Demo圖](/img/demo.jpg)](https://www.youtube.com/watch?v=vOPqylx6xjQ)
 
 ### 程式執行方式
 
